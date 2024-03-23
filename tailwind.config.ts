@@ -10,12 +10,16 @@ const config = {
 	],
   prefix: "",
   theme: {
+    screens: {
+      'sl': {'raw': '(orientation: landscape)'},
+      'tp': {'raw': '(min-width: 480px) and (orientation: portrait)'},
+      'tl': {'raw': '(min-width: 768px) and (orientation: landscape)'},
+      'dl': {'raw': '(min-width: 1100px) and (orientation: landscape)'},
+      'dp': {'raw': '(min-width: 900px) and (orientation: portrait)'},
+    },
     container: {
       center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      padding: "2rem",  
     },
     extend: {
       colors: {
@@ -74,7 +78,13 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    function({ addVariant, e }:any) {
+    addVariant('en', ({ modifySelectors, separator }:any) => {
+      modifySelectors(({ className }:any) => {return `[data-lang="en"] .en\\:${className}`;});
+    });
+    },
+    require("tailwindcss-animate")],
 } satisfies Config
 
 export default config
