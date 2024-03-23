@@ -8,7 +8,7 @@ import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
-//import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 
 
@@ -18,7 +18,7 @@ export const Social = () => {
     
     const onClick = (provider: "wechat"|"qq"|"github") => {
         signIn(provider,{
-   //         callbackUrl: `/${params.lng}${DEFAULT_LOGIN_REDIRECT}`
+            callbackUrl: `/${params.lng}${DEFAULT_LOGIN_REDIRECT}`
         })
     }
     return(

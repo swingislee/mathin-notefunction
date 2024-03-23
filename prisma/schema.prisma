@@ -18,7 +18,7 @@ enum UserRole {
 }
 
 
-model UsersProfile {
+model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
@@ -46,7 +46,7 @@ model Account {
   id_token           String? @db.Text
   session_state      String?
 
-  user UsersProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
