@@ -14,5 +14,9 @@
   "Signintitle": "登录你的账户",
   "register": "注册",
   "Welcom back": "嘿，你来啦！",
-  "languageSwitcher": "更改语言: "
+  "languageSwitcher": "更改语言: ",
+  "Email": "邮箱",
+  "login": "登 陆",
+  "Donthaveanaccount": "你是新用户？",
+  "auth": "用户登陆"
 }

@@ -8,6 +8,7 @@ import { languages } from '@/lib/i18n/settings';
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { LoginButton } from '../auth/login-button';
+import Link from 'next/link';
 
 export default function SetBar({ lng }: { lng: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,9 +64,11 @@ export default function SetBar({ lng }: { lng: string }) {
                 return (
                   <span key={l}>
                     {index > 0 && (' or ')}
-                    <Button variant="secondary" size="icon" onClick={()=> router.push(`/${l}${recordPathname(currentPathname)}`)}>
+                    <Button variant="secondary" size="icon" asChild>
+                      <Link href={`/${l}${recordPathname(currentPathname)}`}>
                       {l}
-                      </Button>
+                      </Link>
+                    </Button>
                   </span>
                 )
               })}

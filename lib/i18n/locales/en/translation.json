@@ -14,5 +14,9 @@
   "Signintitle": "Sign in to your account",
   "register": "register",
   "Welcom back": "Welcom back！",
-  "languageSwitcher": "language: "
+  "languageSwitcher": "language: ",
+  "Email": "Email",
+  "login": "Login",
+  "Donthaveanaccount": "Don't have an account?",
+  "auth": "Auth"
 }
