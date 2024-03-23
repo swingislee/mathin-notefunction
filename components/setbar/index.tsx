@@ -2,16 +2,18 @@
 'use client'
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link'
 import { Translate } from '@/lib/i18n/client';
 import { usePathname } from 'next/navigation';
 import { languages } from '@/lib/i18n/settings';
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { LoginButton } from '../auth/login-button';
 
 export default function SetBar({ lng }: { lng: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = Translate(lng);
   const currentPathname = usePathname();  
+  const router = useRouter()
 
   function recordPathname(pathname:string) {
     const matchedLanguage = languages.find(lng => pathname.startsWith(`/${lng}`));
@@ -47,22 +49,23 @@ export default function SetBar({ lng }: { lng: string }) {
             animate={{ x: '0' }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="absolute top-0 right-0 h-full space-y-1 bg-white dark:bg-slate-600 shadow-lg p-4 pointer-events-auto"
+            className="absolute top-0 right-0 flex flex-col h-full space-y-2  bg-white dark:bg-slate-600 shadow-lg p-4 pointer-events-auto"
           >
             <div className='h-20'>  </div>
-            <Button>
-              {t("signin")}
-            </Button>
-
+            <LoginButton>
+              <Button variant="default"  size="lg">
+                {t("signin")}
+              </Button>
+            </LoginButton>
             <div>
               {t("languageSwitcher")}
               {languages.filter((l) => lng !== l).map((l, index) => {
                 return (
                   <span key={l}>
                     {index > 0 && (' or ')}
-                    <Link href={`/${l}${recordPathname(currentPathname)}`}>
+                    <Button variant="secondary" size="icon" onClick={()=> router.push(`/${l}${recordPathname(currentPathname)}`)}>
                       {l}
-                    </Link>
+                      </Button>
                   </span>
                 )
               })}
