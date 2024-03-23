@@ -3,6 +3,8 @@ import {languages} from '@/lib/i18n/settings'
 // Generate and add i18n prefixed routes
 const I18nRoutes = (baseRoutes:string[], languages:string[]) => {
     const allRoutes: string[] = [];
+    // First, add the original routes to the array
+    allRoutes.push(...baseRoutes);
 
     languages.forEach(lang => {
       baseRoutes.forEach(route => {
@@ -12,30 +14,31 @@ const I18nRoutes = (baseRoutes:string[], languages:string[]) => {
     return allRoutes;
   };
 
+
 /**
  * An array of routes that are accessible to the public
  * these routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = I18nRoutes([
-    ""  ,//homepage is no need '/' for the generatfunction will add it
+export const publicRoutes = [
+    "",   //homepage reduce /en  will change to ""
+    "/"  ,
     "/story",
     "/terms",
     "/minds",
     "/tools",
-  //  "/settings",
-], languages);
+];
    
 /**
  * An array of routes that are used for authentication
  * these routes will redirect logged in users to /settings
  * @type {string[]}
  */
-export const authRoutes = I18nRoutes([
+export const authRoutes = [
     "/auth/login", 
     "/auth/register",
     "/auth/error"
-], languages);
+];
 
 
 /**

@@ -1,11 +1,12 @@
 import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
-
 import { db } from "@/lib/db"
-import authConfig from "./auth.config"
+import { UserRole } from "@prisma/client"
 
+import authConfig from "./auth.config"
 import { getUserById } from "@/data/user"
+
 
 /*  derectly use this todo a type clare in "next-auth": "^5.0.0-beta.15", "as any" doesn't need
 declare module "next-auth" {
@@ -53,18 +54,12 @@ export const {
     },
     */
     async session({ token,session}){
-      /*
-      console.log({
-        sessionToken: token,
-      })
-      */
-
       if (token.sub && session.user){
         session.user.id = token.sub;
       }
 
       if (token.role && session.user){
-        session.user.role = token.role as any; //"next-auth": "^5.0.0-beta.15", "as any" doesn't need
+        session.user.role = token.role as UserRole; //"next-auth": "^5.0.0-beta.15", "as any" doesn't need
       }
 
       return session;

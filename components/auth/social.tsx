@@ -1,5 +1,6 @@
 "use client"
 import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Translate } from "@/lib/i18n/client";
 
 import { FaWeixin } from "react-icons/fa";
@@ -15,10 +16,12 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 export const Social = () => {
     const params = useParams<{ lng: string; }>()
 	const { t } = Translate(params.lng)
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
     
-    const onClick = (provider: "wechat"|"qq"|"github") => {
+    const onClick = (provider: "wechat"|"qq"|"github"|"google") => {
         signIn(provider,{
-            callbackUrl: `/${params.lng}${DEFAULT_LOGIN_REDIRECT}`
+            callbackUrl: callbackUrl || `/${params.lng}${DEFAULT_LOGIN_REDIRECT}`
         })
     }
     return(
@@ -35,7 +38,7 @@ export const Social = () => {
                 size="lg"
                 className="w-full"
                 variant="outline"
-                onClick={() => onClick("qq")}
+                onClick={() => onClick("google")}
             >
                 <BsTencentQq className="h-5 w-5"/>                
             </Button>

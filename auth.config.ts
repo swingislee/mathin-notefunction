@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 
 import Github from "next-auth/providers/github"
+import Google from "next-auth/providers/google"
 import type { OAuthConfig } from "@auth/core/providers"
 
 import { LoginSchema } from "@/schemas"
@@ -69,6 +70,11 @@ export default {
         };
       },
     }satisfies OAuthConfig<WeChatProfile>,
+
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
 
     Github({
       clientId: process.env.GITHUB_CLIENT_ID,

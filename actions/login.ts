@@ -7,7 +7,11 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
 
-export const login = async (values: z.infer<typeof LoginSchema>, lng:string) => {
+export const login = async (
+  values: z.infer<typeof LoginSchema>, 
+  lng:string,
+  callbackUrl?: string | null,
+) => {
   const validatedFields = LoginSchema.safeParse(values);  
 
   if(!validatedFields.success){
@@ -34,6 +38,4 @@ export const login = async (values: z.infer<typeof LoginSchema>, lng:string) => 
 
     throw error;
   }
-
-
 };
