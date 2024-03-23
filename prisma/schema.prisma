@@ -1,0 +1,79 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["games", "minds", "public", "story", "terms", "tools", "users"]
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  STUDENT
+  TEACHER
+  @@schema("users")
+}
+
+
+model UsersProfile {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  password      String?
+  role          UserRole @default(USER)
+  accounts      Account[]
+
+  @@map("profile")
+  @@schema("users")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user UsersProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+  @@schema("users")
+}
+
+model TermsLink {
+  id                              Int    @id @default(autoincrement())
+  upstream_id                     Int?
+  downstream_id                   Int?
+  weight                          Int?   @default(1)
+  point_link_downstream_idTopoint TermsPoints? @relation("link_downstream_idTopoint", fields: [downstream_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  point_link_upstream_idTopoint   TermsPoints? @relation("link_upstream_idTopoint", fields: [upstream_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("links")
+  @@schema("terms")
+}
+
+model TermsPoints {
+  id                             Int     @id @default(autoincrement())
+  title                          String
+  description                    String?
+  main_line                      String?
+  order                          Int?
+  link_link_downstream_idTopoint TermsLink[]  @relation("link_downstream_idTopoint")
+  link_link_upstream_idTopoint   TermsLink[]  @relation("link_upstream_idTopoint")
+  
+  @@map("points")
+  @@schema("terms")
+}

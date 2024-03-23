@@ -49,7 +49,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 		login(values,params.lng)
 			.then((data:any) =>{
 				setError(data.error)
-				//setSuccess(data.success)
+				setSuccess(data.success)
 			})
 	  });
 }
