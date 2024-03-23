@@ -8,7 +8,7 @@ import { useState, useTransition } from "react"
 import { Translate } from "@/lib/i18n/client"
 import { useParams } from "next/navigation"
 
-import { LoginSchema } from "@/schemas"
+import { RegisterSchema } from "@/schemas"
 import {
 	Form,
 	FormControl,
@@ -22,45 +22,46 @@ import { Button } from "../ui/button"
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error"
 import { FormSusses } from "../form-success"
-import { login } from "@/actions/login"
+import { register } from "@/actions/register"
 
 
-export const LoginForm = () => {
- 	const params = useParams<{ lng: string; }>()
-	const { t } = Translate(params.lng)
+export const RegisterForm = () => {
+	const params = useParams<{ lng: string; }>();
+	const { t } = Translate(params.lng);
 
 	const [error,setError] = useState<string | undefined>("");
 	const [success,setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
 
-	const form = useForm<z.infer<typeof LoginSchema>>({
-		resolver: zodResolver(LoginSchema),
+	const form = useForm<z.infer<typeof RegisterSchema>>({
+		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			email: "",
 			password: "",
+			name: "",
 		}
 	})
 
-const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 	setError("")
 	setSuccess("")
 
 	startTransition(() => {
-		login(values,params.lng)
-			.then((data:any) =>{
-				setError(data.error)
-				//setSuccess(data.success)
+		register(values)
+			.then((data) =>{
+	//			setError(data.error)
+	//			setSuccess(data.success)
 			})
 	  });
 }
 
   return (    
 		<CardWrapper
-			titleLabel={t('auth')}
-			headerLabel={t("Welcom back")}
-			backButtonLabel={t('Donthaveanaccount')}
-			backButtonHref={`/${params.lng}/auth/register`}
-			showSocial			
+			titleLabel="Auth"
+			headerLabel="create an account"
+			backButtonLabel="Already have an account?"
+			backButtonHref={`/${useParams}/auth/login`}
+			showSocial
 		>
 			<Form {...form}>
 				<form
@@ -70,15 +71,33 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 				<div className="space-y-2">
 					<FormField 
 						control={form.control}
-						name="email" 
+						name="name" 
 						render={({field}) => (
 							<FormItem>
-								<FormLabel>{t('Email')}</FormLabel>
+								<FormLabel>Name</FormLabel>
 								<FormControl>
 									<Input
 										{...field}
 										disabled={isPending}
-										placeholder="john.doe@example.com"
+										placeholder="john.doe"
+										type="name"
+									/>
+								</FormControl>
+								<FormMessage/>
+							</FormItem>
+						)}
+					/>
+					<FormField 
+						control={form.control}
+						name="email" 
+						render={({field}) => (
+							<FormItem>
+								<FormLabel>Email</FormLabel>
+								<FormControl>
+									<Input
+										{...field}
+										disabled={isPending}
+										placeholder="john.doe@qq.com"
 										type="email"
 									/>
 								</FormControl>
@@ -91,7 +110,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 						name="password" 
 						render={({field}) => (
 							<FormItem>
-								<FormLabel>{t('password')}</FormLabel>
+								<FormLabel>Password</FormLabel>
 								<FormControl>
 									<Input
 										{...field}
@@ -104,6 +123,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 							</FormItem>
 						)}
 					/>
+					
 				</div>
 				<FormError message={error}/>
 				<FormSusses message={success}/>
@@ -112,7 +132,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 					type="submit"
 					className="w-full"
 				>
-					 {t('login')}
+					 create a new account
 				</Button>
 
 				</form>
