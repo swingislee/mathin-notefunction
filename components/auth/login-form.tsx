@@ -8,7 +8,7 @@ import { useCallback, useState, useTransition } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { Translate } from "@/lib/i18n/client"
-import { LoginSchema } from "@/schemas"
+import { LoginSchema } from "@/schemas/auth"
 import {
 	Form,
 	FormControl,
@@ -22,7 +22,8 @@ import { Button } from "../ui/button"
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error"
 import { FormSusses } from "../form-success"
-import { login } from "@/actions/login"
+import { login } from "@/actions/auth/login"
+import Link from "next/link"
 
 
 export const LoginForm = () => {
@@ -91,7 +92,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="space-y-6"
 				>
-				<div className="space-y-2">
+				<div className="space-y-4">
 					<FormField 
 						control={form.control}
 						name="email" 
@@ -124,7 +125,11 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 										type="password"
 									/>
 								</FormControl>
-								
+								<Button size="sm" variant="link" asChild className="px=0 font-normal right-0">
+									<Link href={`/${params.lng}/auth/reset`}>
+										{t("Forgotpassword")}
+									</Link>
+								</Button>
 							</FormItem>
 						)}
 					/>

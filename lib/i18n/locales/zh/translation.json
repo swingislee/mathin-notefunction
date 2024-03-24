@@ -19,5 +19,8 @@
   "login": "登 陆",
   "Donthaveanaccount": "你是新用户？",
   "auth": "用户登陆",
-  "OAuthAccountNotLinked": "这个邮箱已经绑定了其他登陆方式"
+  "OAuthAccountNotLinked": "这个邮箱已经绑定了其他登陆方式",
+  "authreset": "重置密码",
+  "backtologin": "返回登录页面",
+  "sendresetemail": "发送重置邮件"
 }

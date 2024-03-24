@@ -2,14 +2,14 @@
 import * as z from "zod";
 
 import { signIn } from "@/auth";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema } from "@/schemas/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
 import { sendVerificationEmail } from "@/lib/auth/mail";
 
-import { generateVerificationToken } from "@/lib/token";
-import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/auth/token";
+import { getUserByEmail } from "@/data/auth/user";
 
 
 export const login = async (

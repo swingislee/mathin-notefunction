@@ -2,7 +2,7 @@
 
 import { BeatLoader } from "react-spinners"
 
-import { newVerification } from "@/actions/new-verification";
+import { newVerification } from "@/actions/auth/new-verification";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "../form-error";
 import { FormSusses } from "../form-success";

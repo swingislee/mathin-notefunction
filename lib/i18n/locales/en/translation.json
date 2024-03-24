@@ -19,5 +19,8 @@
   "login": "Login",
   "Donthaveanaccount": "Don't have an account?",
   "auth": "Auth",
-  "OAuthAccountNotLinked": "Email already in use with different provider!"
+  "OAuthAccountNotLinked": "Email already in use with different provider!",
+  "authreset": "Auth Reset Password",
+  "backtologin": "Back to login",
+  "sendresetemail": "Send reset email"
 }

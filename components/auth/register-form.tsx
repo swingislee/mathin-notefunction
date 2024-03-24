@@ -8,7 +8,7 @@ import { useState, useTransition } from "react"
 import { Translate } from "@/lib/i18n/client"
 import { useParams } from "next/navigation"
 
-import { RegisterSchema } from "@/schemas"
+import { RegisterSchema } from "@/schemas/auth"
 import {
 	Form,
 	FormControl,
@@ -22,7 +22,7 @@ import { Button } from "../ui/button"
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error"
 import { FormSusses } from "../form-success"
-import { register } from "@/actions/register"
+import { register } from "@/actions/auth/register"
 
 
 export const RegisterForm = () => {

@@ -64,6 +64,18 @@ model VerificationToken{
   @@schema("users")
 }
 
+model PasswordResetToken{
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email,token])
+  @@map("PasswordResetToken")
+  @@schema("users")
+}
+
+
 model TermsLink {
   id                              Int    @id @default(autoincrement())
   upstream_id                     Int?

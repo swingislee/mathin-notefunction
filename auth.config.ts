@@ -6,8 +6,8 @@ import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import type { OAuthConfig } from "@auth/core/providers"
 
-import { LoginSchema } from "@/schemas"
-import { getUserByEmail } from "./data/user";
+import { LoginSchema } from "@/schemas/auth"
+import { getUserByEmail } from "@/data/auth/user";
 
 interface WeChatProfile {
 	openid: string

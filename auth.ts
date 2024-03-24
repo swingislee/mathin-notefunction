@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { UserRole } from "@prisma/client"
 
 import authConfig from "./auth.config"
-import { getUserById } from "@/data/user"
+import { getUserById } from "@/data/auth/user"
 
 
 /*  derectly use this todo a type clare in "next-auth": "^5.0.0-beta.15", "as any" doesn't need

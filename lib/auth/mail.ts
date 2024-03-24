@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import { getEmailTemplate } from "./mailutils"
+import { verificationTemplate, passwordResetTemplate } from "./mailtemp"
 
 interface IEmailOptions {
   to: string
@@ -38,13 +38,26 @@ export const sendVerificationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
+  const confirmLink = `http://192.168.2.213:3000/auth/new-verification?token=${token}`
 
   await sendEmail({
     to: email,
     subject: "confirm your email",
     text: "you found a fantasy place",
-    html: getEmailTemplate(confirmLink, email),
+    html: verificationTemplate(confirmLink, email),
   })
+}
 
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string
+) => {
+  const resetLink = `http://192.168.2.213:3000/auth/new-password?token=${token}`
+
+  await sendEmail({
+    to: email,
+    subject: "Reset your password",
+    text: "click the button to reset yourpassword",
+    html: passwordResetTemplate(resetLink, email),
+  })
 }
