@@ -19,7 +19,7 @@ export const Social = () => {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl");
     
-    const onClick = (provider: "wechat"|"qq"|"github"|"google") => {
+    const onClick = (provider: "wechat"|"qq"|"github") => {
         signIn(provider,{
             callbackUrl: callbackUrl || `/${params.lng}${DEFAULT_LOGIN_REDIRECT}`
         })
@@ -38,7 +38,7 @@ export const Social = () => {
                 size="lg"
                 className="w-full"
                 variant="outline"
-                onClick={() => onClick("google")}
+                onClick={() => onClick("qq")}
             >
                 <BsTencentQq className="h-5 w-5"/>                
             </Button>
