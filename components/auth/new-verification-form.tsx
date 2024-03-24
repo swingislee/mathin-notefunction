@@ -11,12 +11,11 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect,useState } from "react";
 
 export const NewVerificationForm  = () => {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
   const [error , setError] = useState<string | undefined>();
   const [success , setSuccess] = useState<string | undefined>();
-
-  const searchParams = useSearchParams();
-
-  const token = searchParams.get("token");
 
   const onSubmit = useCallback(() => {
     if(!token) return

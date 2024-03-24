@@ -15,7 +15,6 @@ import { getUserByEmail } from "@/data/auth/user";
 export const login = async (
   values: z.infer<typeof LoginSchema>, 
   lng:string,
-  callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);  
 

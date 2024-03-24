@@ -22,5 +22,7 @@
   "OAuthAccountNotLinked": "这个邮箱已经绑定了其他登陆方式",
   "authreset": "重置密码",
   "backtologin": "返回登录页面",
-  "sendresetemail": "发送重置邮件"
+  "sendresetemail": "发送重置邮件",
+  "enteranewpassword": "输入一个新的密码",
+  "resetpassword": "重置密码"
 }

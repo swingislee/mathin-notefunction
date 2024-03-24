@@ -22,5 +22,7 @@
   "OAuthAccountNotLinked": "Email already in use with different provider!",
   "authreset": "Auth Reset Password",
   "backtologin": "Back to login",
-  "sendresetemail": "Send reset email"
+  "sendresetemail": "Send reset email",
+  "enteranewpassword": "Enter a new password",
+  "resetpassword": "Reset password"
 }

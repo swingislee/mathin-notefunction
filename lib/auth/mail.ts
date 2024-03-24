@@ -38,7 +38,7 @@ export const sendVerificationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://192.168.2.213:3000/auth/new-verification?token=${token}`
+  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
 
   await sendEmail({
     to: email,
@@ -52,7 +52,7 @@ export const sendPasswordResetEmail = async (
   email: string,
   token: string
 ) => {
-  const resetLink = `http://192.168.2.213:3000/auth/new-password?token=${token}`
+  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
 
   await sendEmail({
     to: email,
