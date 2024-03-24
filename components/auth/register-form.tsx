@@ -60,7 +60,7 @@ const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 			titleLabel="Auth"
 			headerLabel="create an account"
 			backButtonLabel="Already have an account?"
-			backButtonHref={`/${useParams}/auth/login`}
+			backButtonHref={`/${params.lng}/auth/login`}
 			showSocial
 		>
 			<Form {...form}>

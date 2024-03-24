@@ -53,6 +53,17 @@ model Account {
   @@schema("users")
 }
 
+model VerificationToken{
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email,token])
+  @@map("VerificationToken")
+  @@schema("users")
+}
+
 model TermsLink {
   id                              Int    @id @default(autoincrement())
   upstream_id                     Int?

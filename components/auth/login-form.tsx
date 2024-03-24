@@ -3,12 +3,11 @@
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState, useTransition } from "react"
 
+import { useCallback, useState, useTransition } from "react"
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { Translate } from "@/lib/i18n/client"
-import { useParams, useSearchParams } from "next/navigation"
-
 import { LoginSchema } from "@/schemas"
 import {
 	Form,
@@ -30,7 +29,10 @@ export const LoginForm = () => {
 	const params = useParams<{ lng: string; }>()
 	const { t } = Translate(params.lng)
 
-	const searchParams = useSearchParams()
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
 	const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
 		?`${t("OAuthAccountNotLinked")}`
 		:"";
@@ -38,6 +40,16 @@ export const LoginForm = () => {
 	const [error,setError] = useState<string | undefined>("");
 	const [success,setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
+
+
+
+	const clearErrorParams = useCallback(() => {
+		const searchparams = new URLSearchParams(searchParams.toString());
+	
+		searchparams.delete("error");
+		return searchparams.toString();
+	}, []);
+	
 
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
@@ -51,12 +63,17 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 	setError("")
 	setSuccess("")
 
+	if (searchParams.get("error")){
+		console.log("redirect")
+  const queryString = clearErrorParams(); // This will be an empty string
+  router.push(`${pathname}?${queryString}`); // Navigates without any search parameters
+	}
+
 	startTransition(() => {
 		login(values,params.lng)
 			.then((data) =>{
 				setError(data?.error)
-				// todo  add when we add 2fa
-				//setSuccess(data?.success)
+				setSuccess(data?.success)
 			})
 	  });
 }

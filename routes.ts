@@ -23,6 +23,7 @@ const I18nRoutes = (baseRoutes:string[], languages:string[]) => {
 export const publicRoutes = [
     "",   //homepage reduce /en  will change to ""
     "/"  ,
+    "/auth/new-verification",
     "/story",
     "/terms",
     "/minds",
