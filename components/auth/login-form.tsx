@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useTransition } from "react"
 
+
 import { Translate } from "@/lib/i18n/client"
-import { useParams } from "next/navigation"
+import { useParams, useSearchParams } from "next/navigation"
 
 import { LoginSchema } from "@/schemas"
 import {
@@ -26,8 +27,13 @@ import { login } from "@/actions/login"
 
 
 export const LoginForm = () => {
- 	const params = useParams<{ lng: string; }>()
+	const params = useParams<{ lng: string; }>()
 	const { t } = Translate(params.lng)
+
+	const searchParams = useSearchParams()
+	const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+		?`${t("OAuthAccountNotLinked")}`
+		:"";
 
 	const [error,setError] = useState<string | undefined>("");
 	const [success,setSuccess] = useState<string | undefined>("");
@@ -47,9 +53,10 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 
 	startTransition(() => {
 		login(values,params.lng)
-			.then((data:any) =>{
-				setError(data.error)
-				setSuccess(data.success)
+			.then((data) =>{
+				setError(data?.error)
+				// todo  add when we add 2fa
+				//setSuccess(data?.success)
 			})
 	  });
 }
@@ -105,7 +112,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 						)}
 					/>
 				</div>
-				<FormError message={error}/>
+				<FormError message={error || urlError }/>
 				<FormSusses message={success}/>
 				<Button
 					disabled={isPending}

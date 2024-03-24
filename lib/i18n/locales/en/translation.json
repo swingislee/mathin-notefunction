@@ -18,5 +18,6 @@
   "Email": "Email",
   "login": "Login",
   "Donthaveanaccount": "Don't have an account?",
-  "auth": "Auth"
+  "auth": "Auth",
+  "OAuthAccountNotLinked": "Email already in use with different provider!"
 }
