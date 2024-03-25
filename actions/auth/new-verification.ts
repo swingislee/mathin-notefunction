@@ -5,8 +5,7 @@ import { getUserByEmail } from "@/data/auth/user";
 import { getVerificationTokenByToken } from "@/data/auth/verification-token";
 
 
-export const newVerification = async (token: string, success: string | undefined) => {
-  if (success && success !== "") return;
+export const newVerification = async (token: string) => {
   
   const existingToken = await getVerificationTokenByToken(token)
 

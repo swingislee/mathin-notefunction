@@ -24,5 +24,7 @@
   "backtologin": "Back to login",
   "sendresetemail": "Send reset email",
   "enteranewpassword": "Enter a new password",
-  "resetpassword": "Reset password"
+  "resetpassword": "Reset password",
+  "Two Factor code": "Two Factor code",
+  "confirm": "Confirm"
 }

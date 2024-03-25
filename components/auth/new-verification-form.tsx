@@ -7,20 +7,30 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "../form-error";
 import { FormSusses } from "../form-success";
 
-import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect,useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { useCallback, useEffect,useRef,useState } from "react";
+import { Translate } from "@/lib/i18n/client";
 
 export const NewVerificationForm  = () => {
+	const params = useParams<{ lng: string; }>()
+	const { t } = Translate(params.lng)
+
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const [error , setError] = useState<string | undefined>();
   const [success , setSuccess] = useState<string | undefined>();
 
-  const onSubmit = useCallback(() => {
-    if(!token) return
+  const lastAttemptedToken = useRef<string | null>(null);
 
-    newVerification(token,success)
+  const onSubmit = useCallback(() => {
+    if(!token || token === lastAttemptedToken.current) return;
+
+    lastAttemptedToken.current = token;
+
+    console.timeLog
+
+    newVerification(token)
       .then((data) => {
         setSuccess(data?.success);
         setError(data?.error);
@@ -28,7 +38,7 @@ export const NewVerificationForm  = () => {
       .catch(() =>{
         setError("Something went wrong!")
       })
-  },[token,success]);
+  },[token]);
 
   useEffect(() => {
     onSubmit();
@@ -39,7 +49,7 @@ export const NewVerificationForm  = () => {
         <CardWrapper
             headerLabel="Confirming your verification"
             titleLabel="Auth"
-            backButtonHref="/auth/login"
+            backButtonHref={`/${params.lng}/auth/login`}
             backButtonLabel="Back to login"            
         > 
             <div className="flex items-center w-full justify-center">              

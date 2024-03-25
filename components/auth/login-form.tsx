@@ -38,11 +38,12 @@ export const LoginForm = () => {
 		?`${t("OAuthAccountNotLinked")}`
 		:"";
 
+	const [showTwoFactor,setShowTwoFactor] = useState(false);
 	const [error,setError] = useState<string | undefined>("");
 	const [success,setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
 
-
+  
 
 	const clearErrorParams = useCallback(() => {
 		const searchparams = new URLSearchParams(searchParams.toString());
@@ -73,9 +74,20 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 	startTransition(() => {
 		login(values,params.lng)
 			.then((data) =>{
-				setError(data?.error)
-				setSuccess(data?.success)
+				if (data?.error) {
+					form.reset();
+					setError(data.error);
+				}
+				if (data?.success) {
+					form.reset();
+					setSuccess(data.success);
+				}
+				if (data?.twoFactor) {
+					setShowTwoFactor(true);
+				}
 			})
+
+				.catch(() => setError("something went wrong"))
 	  });
 }
 
@@ -93,46 +105,70 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 				className="space-y-6"
 				>
 				<div className="space-y-4">
-					<FormField 
-						control={form.control}
-						name="email" 
-						render={({field}) => (
-							<FormItem>
-								<FormLabel>{t('Email')}</FormLabel>
-								<FormControl>
-									<Input
-										{...field}
-										disabled={isPending}
-										placeholder="john.doe@example.com"
-										type="email"
-									/>
-								</FormControl>
-								<FormMessage/>
-							</FormItem>
-						)}
-					/>
-					<FormField 
-						control={form.control}
-						name="password" 
-						render={({field}) => (
-							<FormItem>
-								<FormLabel>{t('password')}</FormLabel>
-								<FormControl>
-									<Input
-										{...field}
-										disabled={isPending}
-										placeholder="******"
-										type="password"
-									/>
-								</FormControl>
-								<Button size="sm" variant="link" asChild className="px=0 font-normal right-0">
-									<Link href={`/${params.lng}/auth/reset`}>
-										{t("Forgotpassword")}
-									</Link>
-								</Button>
-							</FormItem>
-						)}
-					/>
+					{showTwoFactor && (
+						<FormField 
+								control={form.control}
+								name="code" 
+								render={({field}) => (
+									<FormItem>
+										<FormLabel>{t('Two Factor code')}</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												disabled={isPending}
+												placeholder="123456"
+											/>
+										</FormControl>
+										<FormMessage/>
+									</FormItem>
+								)}
+						/>
+					)}
+
+					{!showTwoFactor && (
+						<>
+							<FormField 
+								control={form.control}
+								name="email" 
+								render={({field}) => (
+									<FormItem>
+										<FormLabel>{t('Email')}</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												disabled={isPending}
+												placeholder="john.doe@example.com"
+												type="email"
+											/>
+										</FormControl>
+										<FormMessage/>
+									</FormItem>
+								)}
+							/>
+							<FormField 
+								control={form.control}
+								name="password" 
+								render={({field}) => (
+									<FormItem>
+										<FormLabel>{t('password')}</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												disabled={isPending}
+												placeholder="******"
+												type="password"
+											/>
+										</FormControl>
+										<Button size="sm" variant="link" asChild className="px=0 font-normal right-0">
+											<Link href={`/${params.lng}/auth/reset`}>
+												{t("Forgotpassword")}
+											</Link>
+										</Button>
+									</FormItem>
+								)}
+							/>
+						</>
+					)}
 				</div>
 				<FormError message={error || urlError }/>
 				<FormSusses message={success}/>
@@ -141,7 +177,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 					type="submit"
 					className="w-full"
 				>
-					 {t('login')}
+					{showTwoFactor ? `${t("confirm")}` : `${t('login')}`}					 
 				</Button>
 
 				</form>

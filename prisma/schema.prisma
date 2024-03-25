@@ -14,6 +14,7 @@ enum UserRole {
   USER
   STUDENT
   TEACHER
+  
   @@schema("users")
 }
 
@@ -27,6 +28,8 @@ model User {
   password      String?
   role          UserRole @default(USER)
   accounts      Account[]
+  isTwoFactorEnabled Boolean @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
 
   @@map("profile")
   @@schema("users")
@@ -75,6 +78,26 @@ model PasswordResetToken{
   @@schema("users")
 }
 
+model TwoFactorToken{
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email,token])
+  @@map("TwoFactorToken")
+  @@schema("users")
+}
+
+model TwoFactorConfirmation{
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("TwoFactorConfirmation")
+  @@schema("users")
+}
 
 model TermsLink {
   id                              Int    @id @default(autoincrement())
