@@ -1,4 +1,4 @@
-import SetBar from "@/components/setbar";
+import Sidebar from "@/components/Sidebar";
 import { Translate } from "@/lib/i18n";
 import Link from "next/link";
 

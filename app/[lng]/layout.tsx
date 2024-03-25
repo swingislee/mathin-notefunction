@@ -4,6 +4,8 @@ import { dir } from 'i18next'
 import { languages, fallbackLng } from '@/lib/i18n/settings'
 import { Translate } from '@/lib/i18n'
 import Footer from '@/components/Footer'
+import { SessionProvider } from "next-auth/react"
+import { auth }  from '@/auth'
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -23,7 +25,7 @@ export async function generateMetadata({ params: { lng } }: {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: {
     lng
@@ -32,17 +34,20 @@ export default function RootLayout({
   children: React.ReactNode;
   params: {
     lng: string;
-  }}) {
+}}) {
+  const session = await auth();
 
   return (
-    <html lang={lng} dir={dir(lng)}>
-      <head />
-      <body>
-          <div className='h-full'>
-            {children}
-          </div>          
-          <Footer/>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang={lng} dir={dir(lng)}>
+        <head />
+        <body>
+            <div className='h-full'>
+              {children}
+            </div>          
+            <Footer/>
+        </body>
+      </html>
+    </SessionProvider>
   )
 }

@@ -3,7 +3,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { languages, fallbackLng } from '@/lib/i18n/settings'
 import { Translate } from '@/lib/i18n'
 import Navbar from '@/components/Navbar'
-import SetBar from '@/components/setbar'
+import { Sidebar } from '@/components/Sidebar'
 import Image from 'next/image'
 
 
@@ -28,7 +28,7 @@ export default async function Page({ params: { lng } }: {params: {lng:string}}) 
         left-1/2 top-[45%] sl:top-[57%]  -translate-x-1/2 -translate-y-1/2" 
         />
       </div>
-      <SetBar lng={lng}/>
+      <Sidebar lng={lng}/>
        
     </div>
   )
