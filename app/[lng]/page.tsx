@@ -28,7 +28,10 @@ export default async function Page({ params: { lng } }: {params: {lng:string}}) 
         left-1/2 top-[45%] sl:top-[57%]  -translate-x-1/2 -translate-y-1/2" 
         />
       </div>
-      <Sidebar lng={lng}/>
+      <div className="absolute w-full h-full z-20 overflow-hidden">
+        <Sidebar lng={lng}/>
+      </div>
+      
        
     </div>
   )
