@@ -6,6 +6,7 @@ import { Translate } from '@/lib/i18n'
 import Footer from '@/components/Footer'
 import { SessionProvider } from "next-auth/react"
 import { auth }  from '@/auth'
+import { ThemeProvider } from "@/components/providers/theme-provider"
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -21,7 +22,7 @@ export async function generateMetadata({ params: { lng } }: {
   const { t } = await Translate(lng)
   return {
     title: t('title'),
-    content: 'a math place.'
+    content: 'a math place.',    
   }
 }
 
@@ -39,13 +40,21 @@ export default async function RootLayout({
 
   return (
     <SessionProvider session={session}>
-      <html lang={lng} dir={dir(lng)}>
+      <html lang={lng} dir={dir(lng)} suppressHydrationWarning>
         <head />
         <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="mathin-theme-2"          
+          >
             <div className='h-full'>
               {children}
             </div>          
             <Footer/>
+          </ThemeProvider>
         </body>
       </html>
     </SessionProvider>

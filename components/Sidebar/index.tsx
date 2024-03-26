@@ -9,6 +9,7 @@ import { Setlng } from '@/components/setlng';
 
 import { Button } from '@/components/ui/button'
 import { BsPersonBoundingBox,BsX } from "react-icons/bs";
+import { ModeToggle } from '../ui/mode-toggle';
 
 export const Sidebar = ({ lng }: { lng: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,16 +21,30 @@ export const Sidebar = ({ lng }: { lng: string }) => {
   
   return (
     <div className="relative h-full w-full flex justify-end items-start p-4 overflow-hidden pointer-events-none">
-      <button
-        className="fixed focus:outline-none z-50 pointer-events-auto"
-        onClick={toggleDrawer}
-      >
-        {isOpen ? (
-          <BsX  className="h-6 w-6"/>
-        ) : (
-          <BsPersonBoundingBox className="h-6 w-6" />
-        )}
-      </button>
+      <div className='fixed flex p-5 space-x-4 flex-row z-50 items-center pointer-events-auto'>
+        <div>
+          {isOpen ? (
+            <></>
+          ) : (
+            <ModeToggle/>
+          )}  
+        </div>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={toggleDrawer}
+        >
+          {isOpen ? (
+            <BsX  className="h-8 w-8"/>
+          ) : (
+            <BsPersonBoundingBox className="h-8 w-8" />
+          )}
+        </Button>
+      </div>
+
+      
 
       <AnimatePresence>
         {isOpen && (

@@ -20,7 +20,6 @@ export default async function Page({ params: { lng } }: {params: {lng:string}}) 
         `}>    
           {t('title')}
       </h1>      
-      <Navbar lng={lng} page="home" />      
       <div className="absolute w-screen h-screen -z-20 overflow-hidden">
         <Image
         src={"/assets/Main.png"} width={1000} height={1000} alt="Picture of the author"
@@ -28,7 +27,9 @@ export default async function Page({ params: { lng } }: {params: {lng:string}}) 
         left-1/2 top-[45%] sl:top-[57%]  -translate-x-1/2 -translate-y-1/2" 
         />
       </div>
-      <div className="absolute w-full h-full z-20 overflow-hidden">
+      <Navbar lng={lng} page="home" />      
+
+      <div className="absolute w-full h-full z-20 overflow-hidden pointer-events-none">
         <Sidebar lng={lng}/>
       </div>
       

@@ -1,6 +1,6 @@
-import Sidebar from "@/components/Sidebar";
 import { Translate } from "@/lib/i18n";
 import Link from "next/link";
+import { Navbar } from "./_components/navbar";
 
 export default async function storyPage ({ params: { lng } }: {
   params: {
@@ -11,11 +11,14 @@ export default async function storyPage ({ params: { lng } }: {
 
     return (
     <>
-    <h1>{JSON.stringify(lng)}</h1>
+    <div className="sl:pt-12 h-full bg-amber-100">
+         
+      <h1>{JSON.stringify(lng)}</h1>
 
-    <Link href={`/${lng}`}> {t("title")} </Link>
-
-    
+      <Link href={`/${lng}`}> {t("title")} </Link>  
+    </div>  
+    <div className="sl:pt-12 h-full bg-amber-100"></div>
+    <Navbar/>
     </>
     );
   }
