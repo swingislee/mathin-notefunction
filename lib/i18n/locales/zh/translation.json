@@ -26,5 +26,7 @@
   "enteranewpassword": "输入一个新的密码",
   "resetpassword": "重置密码",
   "Two Factor code": "两步验证码",
-  "confirm": "确 认"
+  "confirm": "确 认",
+  "documents": "资料库",
+  "admin": "管理员"
 }

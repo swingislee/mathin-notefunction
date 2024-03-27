@@ -19,15 +19,14 @@ export default function DashboardLayout({children,
 
         <Navigation />
 
-        <div className="flex-1 h-full overflow-y-auto">
+        <div className="flex-1 h-auto rounded-2xl bg-white overflow-y-auto mb-3 tl:ml-2 tl:mr-3 mt-[3.25rem] overflow-hidden">
           {children}
         </div>
 
-        <div className="absolute w-full h-full z-20 overflow-hidden pointer-events-none">
-        <Sidebar lng={lng}/>
-      </div>
-      </div>
-        
+        <div className="absolute w-full h-full z-[99997] overflow-hidden pointer-events-none">
+          <Sidebar lng={lng}/>
+        </div>
+      </div>        
 
     </div>
   );

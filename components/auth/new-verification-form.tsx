@@ -5,7 +5,7 @@ import { BeatLoader } from "react-spinners"
 import { newVerification } from "@/actions/auth/new-verification";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "../form-error";
-import { FormSusses } from "../form-success";
+import { FormSuccess } from "../form-success";
 
 import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useEffect,useRef,useState } from "react";
@@ -55,7 +55,7 @@ export const NewVerificationForm  = () => {
             <div className="flex items-center w-full justify-center">              
               {!success && !error && (<BeatLoader/>)}
               
-		      		<FormSusses message={success}/>
+		      		<FormSuccess message={success}/>
               {!success && (
                 <FormError message={error}/>
               )}

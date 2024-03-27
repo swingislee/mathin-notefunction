@@ -21,7 +21,7 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error"
-import { FormSusses } from "../form-success"
+import { FormSuccess } from "../form-success"
 import { login } from "@/actions/auth/login"
 import Link from "next/link"
 
@@ -171,7 +171,7 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 					)}
 				</div>
 				<FormError message={error || urlError }/>
-				<FormSusses message={success}/>
+				<FormSuccess message={success}/>
 				<Button
 					disabled={isPending}
 					type="submit"

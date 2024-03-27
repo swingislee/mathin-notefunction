@@ -21,7 +21,7 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error"
-import { FormSusses } from "../form-success"
+import { FormSuccess } from "../form-success"
 import { reset } from "@/actions/auth/reset"
 import Link from "next/link"
 
@@ -87,7 +87,7 @@ const onSubmit = (values: z.infer<typeof ResetSchema>) => {
 					/>					
 				</div>
 				<FormError message={error}/>
-				<FormSusses message={success}/>
+				<FormSuccess message={success}/>
 				<Button
 					disabled={isPending}
 					type="submit"

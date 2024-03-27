@@ -26,5 +26,7 @@
   "enteranewpassword": "Enter a new password",
   "resetpassword": "Reset password",
   "Two Factor code": "Two Factor code",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "documents": "Documents",
+  "admin": "Admin"
 }
