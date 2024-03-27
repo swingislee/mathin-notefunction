@@ -4,7 +4,7 @@ import { logout } from "@/actions/auth/logout";
 import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-const SettingPage = () => {
+const DashboardPage = () => {
 	const user = useCurrentUser();
 
   const onClick = () => {
@@ -12,7 +12,7 @@ const SettingPage = () => {
   }
 
   return (
-	  <div>
+	  <div className="flex justify-center items-center">
       <form>
         <Button onClick={onClick}>
           Sign out
@@ -22,4 +22,4 @@ const SettingPage = () => {
   );
 };
 
-export default SettingPage;
+export default DashboardPage;
