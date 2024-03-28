@@ -10,6 +10,8 @@ import { Setlng } from '@/components/setlng';
 import { Button } from '@/components/ui/button'
 import { BsPersonBoundingBox,BsX } from "react-icons/bs";
 import { ModeToggle } from '../ui/mode-toggle';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { LoginForm } from '../auth/login-form';
 
 export const Sidebar = ({ lng }: { lng: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +22,7 @@ export const Sidebar = ({ lng }: { lng: string }) => {
   };
   
   return (
+    <Dialog>
     <div className="relative h-full w-full flex justify-end items-start p-4 overflow-hidden pointer-events-none">
       <div className='fixed flex p-5 space-x-4 flex-row z-50 items-center pointer-events-auto'>
         <div>
@@ -43,9 +46,7 @@ export const Sidebar = ({ lng }: { lng: string }) => {
           )}
         </Button>
       </div>
-
       
-
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -56,15 +57,19 @@ export const Sidebar = ({ lng }: { lng: string }) => {
             className="absolute top-0 right-0 flex flex-col h-full space-y-2  bg-white dark:bg-slate-600 shadow-lg p-4 pointer-events-auto"
           >
             <div className='h-20'>  </div>
-            <LoginButton>
+            <DialogTrigger asChild>
               <Button variant="default"  size="lg">
                 {t("signin")}
               </Button>
-            </LoginButton>
+              </DialogTrigger>
+              <DialogContent className='p-0 w-auto bg-transparent border-none'>
+                <LoginForm />
+              </DialogContent>
             <Setlng lng={lng}/>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>      
     </div>
+    </Dialog>
   );
 }

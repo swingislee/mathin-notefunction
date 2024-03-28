@@ -2,11 +2,13 @@
 import { sendEmail } from "@/lib/send-email"
 import { verificationTemplate, passwordResetTemplate, twoFATemplate } from "./mailtemp"
 
+const domain = process.env.NEXT_PUBLIC_APP_URL; 
+
 export const sendVerificationEmail = async (
   email: string,
   token: string
 ) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
+  const confirmLink = `${domain}/auth/new-verification?token=${token}`
 
   await sendEmail({
     to: email,
@@ -20,7 +22,7 @@ export const sendPasswordResetEmail = async (
   email: string,
   token: string
 ) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
+  const resetLink = `${domain}/auth/new-password?token=${token}`
 
   await sendEmail({
     to: email,
@@ -29,7 +31,6 @@ export const sendPasswordResetEmail = async (
     html: passwordResetTemplate(resetLink, email),
   })
 }
-
 
 export const sendTwoFactorTokenEmail = async (
   email: string,

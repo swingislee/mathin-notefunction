@@ -33,6 +33,7 @@ export const LoginForm = () => {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
+	const callbackUrl = searchParams.get("callbackUrl");
 
 	const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
 		?`${t("OAuthAccountNotLinked")}`
@@ -72,10 +73,9 @@ const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	startTransition(() => {
-		login(values,params.lng)
+		login(values,params.lng,callbackUrl)
 			.then((data) =>{
 				if (data?.error) {
-					form.reset();
 					setError(data.error);
 				}
 				if (data?.success) {

@@ -1,6 +1,7 @@
 "use server"
 import * as z from "zod";
 import { db } from "@/lib/db";
+import bcrypt from "bcryptjs"
 import { AuthError } from "next-auth";
 
 import { signIn } from "@/auth";
@@ -22,6 +23,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 export const login = async (
   values: z.infer<typeof LoginSchema>, 
   lng:string,
+  callbackUrl?:string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);  
 
@@ -52,6 +54,16 @@ export const login = async (
 
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordValid) {
+      return { error: "Invalid credentials!" };
+    }
+
+
     if (code) {
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email)
     
@@ -101,7 +113,7 @@ export const login = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: `/${lng}${DEFAULT_LOGIN_REDIRECT}`,
+      redirectTo: callbackUrl || `/${lng}${DEFAULT_LOGIN_REDIRECT}`,
     })
   } catch (error) {
     if (error instanceof AuthError){

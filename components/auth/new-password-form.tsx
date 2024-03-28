@@ -63,7 +63,7 @@ const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
 			titleLabel={t('authreset')}
 			headerLabel={t("enteranewpassword")}
 			backButtonLabel={t('backtologin')}
-			backButtonHref={`/${params.lng}/auth/register`}
+			backButtonHref={`/${params.lng}/auth/login`}
 		>
 			<Form {...form}>
 				<form

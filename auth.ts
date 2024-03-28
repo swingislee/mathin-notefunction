@@ -77,9 +77,6 @@ export const {
 
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;//"next-auth": "^5.0.0-beta.15", "as any" doesn't need
-      }
-
-      if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;//"next-auth": "^5.0.0-beta.15", "as any" doesn't need

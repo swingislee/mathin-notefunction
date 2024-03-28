@@ -30,10 +30,11 @@ export default auth((req) => {
   console.log(`Query string: ${queryString}`);
 
   const isApiAuthRoute = path.startsWith(apiAuthPrefix);
+
   console.log(`Is API Auth Route: ${isApiAuthRoute}`);
 
   if (isApiAuthRoute) {
-    console.log("Proceeding with API Auth Route.");
+    console.log("API Route.");
     return NextResponse.next();
   }
 
@@ -61,14 +62,21 @@ export default auth((req) => {
   console.log(`Language Preference: ${lng}`);
 
   if (isAuthRoute && isLoggedIn) {
-    console.log("Redirecting to default login redirect.");
+    console.log("default login redirect.");
     return NextResponse.redirect(new URL(`/${lng}${DEFAULT_LOGIN_REDIRECT}`, nextUrl));
-  }
+  } 
 
   // Correctly handle private routes for not logged-in users
   if (!isLoggedIn && !isPublicRoute && !isAuthRoute) {
-    console.log("Redirecting logged-out user attempting to access a private route to login.");
-    return NextResponse.redirect(new URL(`/${lng}/auth/login`, nextUrl));
+    let callbackUrl = path;
+    if (queryString) {
+      callbackUrl += queryString 
+    }
+
+    const encodeCallbackUrl = encodeURIComponent(callbackUrl)
+
+    console.log("logged-out user: private route -> login.");
+    return NextResponse.redirect(new URL(`/${lng}/auth/login?callbackUrl=${encodeCallbackUrl}`, nextUrl));
   }
 
   if (!hasLanguagePrefix) {

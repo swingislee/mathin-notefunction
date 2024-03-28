@@ -2,6 +2,9 @@
 import { useRouter } from 'next/navigation'
 import { Translate } from "@/lib/i18n/client"
 import { useParams } from "next/navigation"
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { DialogContent } from '@radix-ui/react-dialog';
+import { LoginForm } from '@/components/auth/login-form';
 
 interface LoginButtonProps{
     children:React.ReactNode;
@@ -20,10 +23,16 @@ export const LoginButton = ({
 
     if (mode === "modal"){
         return(
-            <span>
-              TODO: implement modal   
-            </span>
-        )    }
+            <Dialog>
+              <DialogTrigger asChild={asChild}>
+                {children}
+              </DialogTrigger>
+              <DialogContent>
+                <LoginForm />
+              </DialogContent>
+            </Dialog>
+        )    
+    }
 
     return(
         <span onClick={()=> router.push(`/${params.lng}/auth/login`)} className="cursor-pointer">
