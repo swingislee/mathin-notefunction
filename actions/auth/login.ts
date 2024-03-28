@@ -10,7 +10,7 @@ import { getTwoFactorTokenByEmail } from "@/data/auth/two-factor-token";
 import { 
   generateVerificationToken,
   generateTwoFactorToken 
-} from "@/lib/auth/token";
+} from "@/lib/auth/tokens";
 import { 
   sendVerificationEmail,
   sendTwoFactorTokenEmail 

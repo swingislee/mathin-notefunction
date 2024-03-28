@@ -6,7 +6,7 @@ import * as z from "zod";
 
 import { RegisterSchema } from "@/schemas/auth";
 import { getUserByEmail } from "@/data/auth/user";
-import { generateVerificationToken } from "@/lib/auth/token";
+import { generateVerificationToken } from "@/lib/auth/tokens";
 import { sendVerificationEmail } from "@/lib/auth/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
