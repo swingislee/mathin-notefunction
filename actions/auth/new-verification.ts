@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/auth/user";
 import { getVerificationTokenByToken } from "@/data/auth/verification-token";
-
+import { getUserById } from "@/data/auth/user";
 
 export const newVerification = async (token: string) => {
   
@@ -19,11 +19,13 @@ export const newVerification = async (token: string) => {
     return { error: "Token has expired" }
   }
 
-  const existingUser = await getUserByEmail(existingToken.email)
+  const existingUser = await getUserById(existingToken.userId)
+
 
   if (!existingUser) {
-    return { error: "Email does not exist" };   
+    return { error: "User does not exist" };   
   }
+
 
   await db.user.update({
     where: { id: existingUser.id},

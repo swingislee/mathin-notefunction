@@ -32,7 +32,7 @@ export const generateTwoFactorToken  = async ( email: string ) => {
 };
 
 
-export const generateVerificationToken  = async ( email: string ) => {
+export const generateVerificationToken  = async ( email: string, userId: string) => {
   const token = uuidv4();
   const expires = new Date(new Date().getTime() + 3600 * 1000)
 
@@ -48,6 +48,7 @@ export const generateVerificationToken  = async ( email: string ) => {
 
   const verificationToken = await db.verificationToken.create({
     data: {
+      userId,
       email,
       token,
       expires,

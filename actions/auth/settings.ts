@@ -41,7 +41,8 @@ export const settings = async (
     }
 
     const verificationToken = await generateVerificationToken(
-      values.email
+      values.email,
+      user.id,
     );
     await sendVerificationEmail(
       verificationToken.email,
